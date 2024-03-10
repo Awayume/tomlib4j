@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question
+    about: Ask a question or discuss of tomlib4j.
+    url: https://github.com/Awayume/tomlib4j/discussions.
