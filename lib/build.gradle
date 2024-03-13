@@ -27,7 +27,7 @@ dependencies {
     checkerFramework 'org.checkerframework:checker:3.42.0'
 
     // Error Prone
-    compileOnly 'com.google.errorprone:error_prone_annotations:2.10.0'
+    compileOnly 'com.google.errorprone:error_prone_annotations:2.26.1'
     errorprone 'com.google.errorprone:error_prone_core:2.10.0'
 }
 
