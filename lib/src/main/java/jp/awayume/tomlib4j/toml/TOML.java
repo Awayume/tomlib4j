@@ -11,7 +11,7 @@ import com.google.errorprone.annotations.DoNotCall;
 
 
 /**
- * Class for parsing and retaining TOML data whose structure is known.
+ * A class for parsing and retaining TOML data whose structure is known.
  *
  * @author Awayume {@literal <dev@awayume.jp>}
  * @since 0.1
