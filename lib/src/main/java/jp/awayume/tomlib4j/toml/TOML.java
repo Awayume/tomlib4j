@@ -3,9 +3,15 @@
 
 package jp.awayume.tomlib4j.toml;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.errorprone.annotations.DoNotCall;
 
@@ -22,8 +28,8 @@ public abstract class TOML {
      *
      * @param path The path of the TOML file
      */
-    public TOML(Path path) {
-        throw new UnsupportedOperationException("Not implemented");
+    public TOML(Path path) throws IOException {
+        this(path.toFile());
     }
 
     /**
@@ -31,17 +37,43 @@ public abstract class TOML {
      *
      * @param file The {@link File} instance
      */
-    public TOML(File file) {
-        throw new UnsupportedOperationException("Not implemented");
+    @SuppressWarnings("method.invocation")
+    public TOML(File file) throws IOException {
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        List<String> lines = new ArrayList<>();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            lines.add(line);
+        }
+        this.parseLines(lines.toArray(new String[0]));
     }
 
     /**
      * Parses TOML from string.
      *
-     * @param data The TOML data string
+     * @param data The String of TOML data
      */
+    @SuppressWarnings("method.invocation")
     public TOML(String data) {
-        throw new UnsupportedOperationException("Not implemented");
+        this.parseLines(data.split("\r?\n"));
+    }
+
+    /**
+     * Parses TOML from strings splitted by lines.
+     *
+     * @param lines Strings of TOML data split by lines
+     */
+    private void parseLines(String[] lines) {
+        for (int i = 0; i < lines.length; i++) {
+            String line = lines[i].trim();
+            // TODO
+        }
     }
 
     /**
