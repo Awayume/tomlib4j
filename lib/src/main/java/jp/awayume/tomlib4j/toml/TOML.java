@@ -94,7 +94,9 @@ public abstract class TOML {
         }
         for (int i = 0; i < lines.length; i++) {
             String line = lines[i].trim();
-            // TODO
+            if (!line.startsWith("#")) {
+                // TODO
+            }
         }
     }
 
