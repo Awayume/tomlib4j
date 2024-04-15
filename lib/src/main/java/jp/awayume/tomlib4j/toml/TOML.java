@@ -98,7 +98,27 @@ public abstract class TOML {
                 continue;
             }
             else if (!line.startsWith("#")) {
-                // TODO
+                if (line.startsWith("\\[(\\w|-)+\\]")) {
+                    // TODO
+                } else if (line.startsWith("(\\w|-)+")) {
+                    String[] pair = line.split("\\s*=\\s*", 2);
+                    if (pair.length != 2 || pair[1].equals("")) {
+                        throw new RuntimeException("Invalid syntax");
+                    }
+                    String key = pair[0];
+                    String value = pair[1];
+                    // TODO
+                } else if (line.startsWith("\".*\"")) {
+                    String[] pair = line.split("\\s*=\\s*", 2);
+                    if (pair.length != 2 || pair[1].equals("")) {
+                        throw new RuntimeException("Invalid syntax");
+                    }
+                    String key = pair[0];
+                    String value = pair[1];
+                    // TODO
+                } else {
+                    throw new RuntimeException("Invalid syntax");
+                }
             }
         }
     }
