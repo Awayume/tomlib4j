@@ -102,19 +102,30 @@ public abstract class TOML {
                     // TODO
                 } else if (line.startsWith("(\\w|-)+")) {
                     String[] pair = line.split("\\s*=\\s*", 2);
-                    if (pair.length != 2 || pair[1].equals("")) {
+                    if (pair.length() != 2 || pair[1].length() == 0) {
                         throw new RuntimeException("Invalid syntax");
                     }
                     String key = pair[0];
                     String value = pair[1];
                     // TODO
                 } else if (line.startsWith("\".*\"")) {
-                    String[] pair = line.split("\\s*=\\s*", 2);
-                    if (pair.length != 2 || pair[1].equals("")) {
+                    int keyLength;
+                    boolean isEscaped = false;
+                    for (int i = 1; i < line.length(); i++) {
+                        String str = line.charAt(i);
+                        if (str.equals("\\")) {
+                            isEscaped = true;
+                        } else if (!isEscaped && str.equals("\"")) {
+                            keyLength = i + 1;
+                        } else if (isEscaped) {
+                            isEscaped = false;
+                        }
+                    }
+                    String key = line.substring(1, keyLength);
+                    String value = line.substring(keyLength + 1).split("\\s*=\\s*", 2)[1].trim();
+                    if (value.length() == 0) {
                         throw new RuntimeException("Invalid syntax");
                     }
-                    String key = pair[0];
-                    String value = pair[1];
                     // TODO
                 } else {
                     throw new RuntimeException("Invalid syntax");
