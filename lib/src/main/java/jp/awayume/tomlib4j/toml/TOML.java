@@ -79,16 +79,16 @@ public abstract class TOML {
      * @param lines Strings of TOML data split by lines
      */
     private void parseLines(String[] lines) {
-        Map<String, Field> keys = new HashMap<>();
+        Map<String, Field> keyFields = new HashMap<>();
         Field[] fields = this.getClass().getDeclaredFields();
         for (int i = 0; i < fields.length; i++) {
             Field field = fields[i];
             if (field.getAnnotation(NotKey.class) == null) {
                 Table table = field.getAnnotation(Table.class);
                 if (table != null) {
-                    keys.put(String.format("%s.%s", table.name(), field.getName()), field);
+                    keyFields.put(String.format("%s.%s", table.name(), field.getName()), field);
                 } else {
-                    keys.put(field.getName(), field);
+                    keyFields.put(field.getName(), field);
                 }
             }
         }
@@ -102,24 +102,27 @@ public abstract class TOML {
                     // TODO
                 } else if (line.startsWith("(\\w|-)+")) {
                     String[] pair = line.split("\\s*=\\s*", 2);
-                    if (pair.length() != 2 || pair[1].length() == 0) {
+                    if (pair.length != 2 || pair[1].length() == 0) {
                         throw new RuntimeException("Invalid syntax");
                     }
                     String key = pair[0];
                     String value = pair[1];
                     // TODO
                 } else if (line.startsWith("\".*\"")) {
-                    int keyLength;
+                    int keyLength = 0;
                     boolean isEscaped = false;
-                    for (int i = 1; i < line.length(); i++) {
-                        String str = line.charAt(i);
-                        if (str.equals("\\")) {
+                    for (int j = 1; j < line.length(); j++) {
+                        char ch = line.charAt(j);
+                        if (ch == '\\') {
                             isEscaped = true;
-                        } else if (!isEscaped && str.equals("\"")) {
-                            keyLength = i + 1;
+                        } else if (!isEscaped && ch == '"') {
+                            keyLength = j + 1;
                         } else if (isEscaped) {
                             isEscaped = false;
                         }
+                    }
+                    if (keyLength == 0) {
+                        throw new RuntimeException("Invalid syntax");
                     }
                     String key = line.substring(1, keyLength);
                     String value = line.substring(keyLength + 1).split("\\s*=\\s*", 2)[1].trim();
