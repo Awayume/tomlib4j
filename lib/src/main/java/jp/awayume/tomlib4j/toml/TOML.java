@@ -125,7 +125,7 @@ public abstract class TOML {
                         throw new RuntimeException("Invalid syntax");
                     }
                     String key = line.substring(1, keyLength);
-                    String value = line.substring(keyLength + 1).split("\\s*=\\s*", 2)[1].trim();
+                    String value = line.substring(keyLength + 1).split("\\s*=\\s*", 2)[1];
                     if (value.length() == 0) {
                         throw new RuntimeException("Invalid syntax");
                     }
