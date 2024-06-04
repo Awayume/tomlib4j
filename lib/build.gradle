@@ -22,8 +22,8 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
 
     // Checker Framework
-    compileOnly 'org.checkerframework:checker-qual:3.42.0'
-    testCompileOnly 'org.checkerframework:checker-qual:3.42.0'
+    compileOnly 'org.checkerframework:checker-qual:3.44.0'
+    testCompileOnly 'org.checkerframework:checker-qual:3.44.0'
     checkerFramework 'org.checkerframework:checker:3.42.0'
 
     // Error Prone
