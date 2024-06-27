@@ -9,7 +9,7 @@ plugins {
     id 'java-library'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'net.ltgt.errorprone' version '3.1.0'
-    id 'org.checkerframework' version '0.6.37'
+    id 'org.checkerframework' version '0.6.41'
 }
 
 
